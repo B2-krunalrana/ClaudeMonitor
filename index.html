@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — ClaudeMonitor</title>
+  <meta name="description" content="Privacy Policy for ClaudeMonitor — a Chrome extension that tracks your Claude.ai usage in real time. Made with love by Krunal Rana." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0d0f17;
+      --bg-card:     #141720;
+      --bg-section:  #1a1d2a;
+      --border:      rgba(255,255,255,0.07);
+      --accent:      #5c7cfa;
+      --accent-2:    #7950f2;
+      --accent-glow: rgba(92,124,250,0.22);
+      --text:        #e8eaf0;
+      --text-2:      #9098b8;
+      --text-3:      #555e7a;
+      --success:     #40c057;
+      --warning:     #f59f00;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ═══════════════════════════════════════ NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,15,23,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      height: 60px;
+      gap: 12px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 0 14px var(--accent-glow);
+      flex-shrink: 0;
+    }
+
+    .nav-logo-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-logo-name span {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-spacer { flex: 1; }
+
+    .nav-link {
+      font-size: 12.5px;
+      color: var(--text-2);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .nav-link:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+
+    /* ═══════════════════════════════════════ HERO */
+    .hero {
+      text-align: center;
+      padding: 72px 24px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(92,124,250,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(92,124,250,0.1);
+      border: 1px solid rgba(92,124,250,0.25);
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .hero h1 .gradient {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-2);
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .hero-meta .dot { color: var(--text-3); }
+
+    /* ═══════════════════════════════════════ CONTENT */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* Quick Summary Cards */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .summary-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .summary-card h3 {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .summary-card p {
+      font-size: 11.5px;
+      color: var(--text-2);
+      line-height: 1.55;
+    }
+
+    /* Policy Sections */
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .section h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .section p {
+      font-size: 13.5px;
+      color: var(--text-2);
+      margin-bottom: 12px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    /* Data list */
+    .data-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .data-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-2);
+      background: var(--bg-section);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+
+    .data-list li .icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .data-list li strong { color: var(--text); font-weight: 600; display: block; font-size: 12.5px; margin-bottom: 2px; }
+
+    /* Highlight box */
+    .highlight {
+      background: rgba(92,124,250,0.07);
+      border: 1px solid rgba(92,124,250,0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    .highlight strong { color: var(--accent); }
+
+    /* Status pill */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .pill.green { background: rgba(64,192,87,0.12); color: var(--success); border: 1px solid rgba(64,192,87,0.25); }
+    .pill.amber { background: rgba(245,159,0,0.12); color: var(--warning); border: 1px solid rgba(245,159,0,0.25); }
+
+    /* ═══════════════════════════════════════ CONTACT */
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 48px;
+    }
+
+    .contact-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+      box-shadow: 0 0 18px var(--accent-glow);
+    }
+
+    .contact-info h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .contact-info p {
+      font-size: 12.5px;
+      color: var(--text-2);
+    }
+
+    .contact-links {
+      margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .contact-btn.linkedin {
+      background: #0a66c2;
+      color: white;
+      box-shadow: 0 2px 8px rgba(10,102,194,0.3);
+    }
+
+    .contact-btn.linkedin:hover {
+      background: #0e78d9;
+      box-shadow: 0 4px 14px rgba(10,102,194,0.45);
+      transform: translateY(-1px);
+    }
+
+    .contact-btn.github {
+      background: var(--bg-section);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+    }
+
+    .contact-btn.github:hover {
+      background: #24292e;
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    /* ═══════════════════════════════════════ FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 32px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* ═══════════════════════════════════════ RESPONSIVE */
+    @media (max-width: 600px) {
+      nav { padding: 0 16px; }
+      .contact-links { margin-left: 0; }
+      .contact-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ─────────────────────────────── -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">📊</div>
+      <span class="nav-logo-name">Claude<span>Monitor</span></span>
+    </a>
+    <div class="nav-spacer"></div>
+    <a href="https://github.com/krunalrana/ClaudeMonitor" target="_blank" class="nav-link">GitHub</a>
+    <a href="https://www.linkedin.com/in/krunal-rana/" target="_blank" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- ── Hero ───────────────────────────────────── -->
+  <div class="hero">
+    <div class="hero-badge">📋 Legal Document</div>
+    <h1>Privacy Policy for<br/><span class="gradient">ClaudeMonitor</span></h1>
+    <p class="hero-sub">
+      We believe in radical transparency. This policy explains exactly what data we collect,
+      why we collect it, and how it's used — in plain English.
+    </p>
+    <div class="hero-meta">
+      <span>📅 Last Updated: June 17, 2026</span>
+      <span class="dot">·</span>
+      <span>👤 Author: Krunal Rana</span>
+      <span class="dot">·</span>
+      <span>🔒 No personal data sold</span>
+    </div>
+  </div>
+
+  <!-- ── Main Content ───────────────────────────── -->
+  <div class="container">
+
+    <!-- At-a-Glance Cards -->
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-icon">🔒</div>
+        <div>
+          <h3>No Selling</h3>
+          <p>Your data is never sold or shared with advertisers.</p>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-icon">📦</div>
+        <div>
+          <h3>Minimal Data</h3>
+          <p>Only usage statistics needed for core functionality.</p>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-icon">🧑‍💻</div>
+        <div>
+          <h3>Open Source</h3>
+          <p>Full source code is publicly auditable on GitHub.</p>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-icon">🗑️</div>
+        <div>
+          <h3>Your Rights</h3>
+          <p>You can delete all stored data at any time.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. Who We Are -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2>Who We Are</h2>
+      </div>
+      <p>
+        ClaudeMonitor is a free, open-source Chrome extension developed and maintained by
+        <strong>Krunal Rana</strong>. The extension is published as an independent personal project
+        and is not affiliated with Anthropic, Claude.ai, or any corporate entity.
+      </p>
+      <p>
+        The full source code is available at
+        <a href="https://github.com/krunalrana/ClaudeMonitor" target="_blank"
+           style="color: var(--accent); text-decoration: none; font-weight: 500;">
+          github.com/krunalrana/ClaudeMonitor
+        </a>
+        — you are encouraged to read and audit it.
+      </p>
+    </div>
+
+    <!-- 2. What Data We Collect -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2>What Data We Collect</h2>
+      </div>
+      <p>ClaudeMonitor collects only the minimum data required to show you accurate usage statistics:</p>
+
+      <ul class="data-list">
+        <li>
+          <span class="icon">📊</span>
+          <div>
+            <strong>Token Usage Counts</strong>
+            Approximate number of tokens consumed in your Claude.ai sessions during the current 5-hour
+            window and weekly periods. This is calculated locally from intercepted API responses.
+          </div>
+        </li>
+        <li>
+          <span class="icon">🏢</span>
+          <div>
+            <strong>Organization ID</strong>
+            Your Claude.ai organization ID (a non-personally-identifiable identifier). This is used
+            to synchronize usage data across your devices via Firebase.
+          </div>
+        </li>
+        <li>
+          <span class="icon">⏱️</span>
+          <div>
+            <strong>Reset Timestamps</strong>
+            The time at which your session or weekly usage limits are scheduled to reset.
+          </div>
+        </li>
+        <li>
+          <span class="icon">🌐</span>
+          <div>
+            <strong>UI Language Preference</strong>
+            Your selected interface language (stored locally in browser storage only).
+          </div>
+        </li>
+      </ul>
+
+      <div class="highlight">
+        <strong>We do NOT collect:</strong> message content, conversation history, personal names,
+        email addresses, IP addresses, browsing history, or any other personally identifiable information.
+      </div>
+    </div>
+
+    <!-- 3. How We Use Data -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2>How We Use Your Data</h2>
+      </div>
+      <ul class="data-list">
+        <li>
+          <span class="icon">📈</span>
+          <div>
+            <strong>Display Usage Statistics</strong>
+            Token counts and reset timers are displayed directly in the Claude.ai sidebar and popup.
+          </div>
+        </li>
+        <li>
+          <span class="icon">🔄</span>
+          <div>
+            <strong>Cross-Device Sync</strong>
+            Your organization ID and usage data are synced via Firebase so your stats are consistent
+            across multiple devices or browser profiles.
+          </div>
+        </li>
+        <li>
+          <span class="icon">🔔</span>
+          <div>
+            <strong>Reset Notifications (optional)</strong>
+            If you enable it, we use stored reset timestamps to send a browser notification when
+            your usage limit resets.
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 4. Data Storage & Third Parties -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2>Data Storage &amp; Third Parties</h2>
+      </div>
+
+      <ul class="data-list">
+        <li>
+          <span class="icon">💾</span>
+          <div>
+            <strong>Browser Local Storage</strong>
+            Most data (language preference, notification settings, cached usage) is stored locally
+            in your browser using the standard <code style="font-family: monospace; font-size: 11.5px; background: rgba(255,255,255,0.06); padding: 1px 5px; border-radius: 4px;">chrome.storage.local</code> API.
+            It never leaves your device unless explicitly synced.
+          </div>
+        </li>
+        <li>
+          <span class="icon">🔥</span>
+          <div>
+            <strong>Firebase (Google) — Sync only</strong>
+            We use Firebase Realtime Database to sync your organization ID and usage totals across
+            devices. Firebase's own
+            <a href="https://firebase.google.com/support/privacy" target="_blank"
+               style="color: var(--accent); text-decoration: none;">privacy policy</a> applies.
+            No PII is transmitted — only your org ID and aggregate token counts.
+          </div>
+        </li>
+        <li>
+          <span class="icon">🚫</span>
+          <div>
+            <strong>No Analytics, No Ads, No Tracking</strong>
+            We do not use any analytics platforms (Google Analytics, Mixpanel, etc.), advertising
+            networks, or behavioral tracking of any kind.
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 5. Permissions Explained -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2>Chrome Permissions Explained</h2>
+      </div>
+      <p>Here is exactly why each permission is requested:</p>
+      <ul class="data-list">
+        <li>
+          <span class="icon">🌐</span>
+          <div>
+            <strong>host_permissions: claude.ai</strong>
+            Required to inject the usage UI into the Claude.ai page and intercept API responses to count tokens.
+          </div>
+        </li>
+        <li>
+          <span class="icon">🔌</span>
+          <div>
+            <strong>webRequest</strong>
+            Used to intercept Claude.ai API responses (locally, never sent externally) to extract usage data.
+          </div>
+        </li>
+        <li>
+          <span class="icon">💿</span>
+          <div>
+            <strong>storage</strong>
+            Saves your preferences and usage cache locally in your browser.
+          </div>
+        </li>
+        <li>
+          <span class="icon">🔔</span>
+          <div>
+            <strong>notifications</strong>
+            Used only if you opt in to usage-reset notifications.
+          </div>
+        </li>
+        <li>
+          <span class="icon">🕐</span>
+          <div>
+            <strong>alarms</strong>
+            Schedules background checks for usage reset times.
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 6. Data Retention & Deletion -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <h2>Data Retention &amp; Deletion</h2>
+      </div>
+      <p>
+        Usage data (token counts, reset timestamps) is stored temporarily and automatically cleared
+        when your usage period resets. Language and notification preferences are stored until you
+        change or remove them.
+      </p>
+      <p>
+        <strong style="color: var(--text);">To delete all data immediately:</strong> go to
+        <code style="font-family: monospace; font-size: 12px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px;">chrome://extensions</code>
+        → ClaudeMonitor → <em>Remove extension</em>. All locally stored data is erased. Firebase-synced
+        data will expire automatically within 24 hours.
+      </p>
+    </div>
+
+    <!-- 7. Children's Privacy -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <h2>Children's Privacy</h2>
+      </div>
+      <p>
+        ClaudeMonitor is not directed at children under the age of 13. We do not knowingly collect
+        any information from children. If you believe a child has provided data through this extension,
+        please contact us immediately.
+      </p>
+    </div>
+
+    <!-- 8. Changes to This Policy -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <h2>Changes to This Policy</h2>
+      </div>
+      <p>
+        Any material updates to this Privacy Policy will be announced via a new version release on
+        the Chrome Web Store and via the GitHub repository. The "Last Updated" date at the top of
+        this page will always reflect the most recent revision.
+      </p>
+      <p>
+        <span class="pill green">✓ Current version</span>
+        &nbsp; This policy was last updated on <strong style="color: var(--text);">June 17, 2026</strong>.
+      </p>
+    </div>
+
+    <!-- Contact Card -->
+    <div class="contact-card">
+      <div class="contact-avatar">👨‍💻</div>
+      <div class="contact-info">
+        <h3>Questions? Let's talk.</h3>
+        <p>Reach out to Krunal Rana directly via LinkedIn<br/>or open an issue on GitHub.</p>
+      </div>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/krunal-rana/" target="_blank" class="contact-btn linkedin">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452H16.89v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a1.98 1.98 0 01-1.976-1.98 1.98 1.98 0 011.976-1.98 1.98 1.98 0 011.976 1.98 1.98 1.98 0 01-1.976 1.98zm1.708 13.019H3.63V9h3.415v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/krunalrana/ClaudeMonitor" target="_blank" class="contact-btn github">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+          View Source
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+  <!-- ── Footer ─────────────────────────────────── -->
+  <footer>
+    <p>
+      © 2026 <a href="https://www.linkedin.com/in/krunal-rana/" target="_blank">Krunal Rana</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/krunalrana/ClaudeMonitor" target="_blank">ClaudeMonitor on GitHub</a>
+      &nbsp;·&nbsp;
+      Made with ❤️ in India
+    </p>
+  </footer>
+
+</body>
+</html>
