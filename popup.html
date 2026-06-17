@@ -5,91 +5,118 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="tracker-styles.css">
 	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
 		:root {
-			--bg-primary: #1e1e1e;
-			--bg-secondary: #252526;
-			--text-primary: #d4d4d4;
-			--text-secondary: #9cdcfe;
-			--button-bg: #2d2d2d;
-			--button-hover: #3e3e3e;
-			--button-active: #505050;
-			--border-color: #454545;
+			--bg-primary: #111318;
+			--bg-secondary: #1a1d24;
+			--bg-card: #1e2130;
+			--bg-hover: #252840;
+			--text-primary: #e8eaf0;
+			--text-secondary: #8b91a8;
+			--text-muted: #555c75;
+			--accent: #5c7cfa;
+			--accent-glow: rgba(92, 124, 250, 0.18);
+			--accent-dim: rgba(92, 124, 250, 0.08);
+			--warning: #f03e3e;
+			--success: #40c057;
+			--border: rgba(255,255,255,0.07);
+			--border-subtle: rgba(255,255,255,0.04);
 		}
 
 		body {
-			width: 300px;
-			margin: 0;
-			padding: 16px;
-			background-color: var(--bg-primary);
+			width: 320px;
+			background: var(--bg-primary);
 			color: var(--text-primary);
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 			font-size: 13px;
 			line-height: 1.5;
+			padding: 0;
+			overflow: hidden;
 		}
 
-		p {
-			margin: 0 0 12px 0;
-		}
-
-		.button-container {
+		/* ── Header ─────────────────────────────────────── */
+		.header {
 			display: flex;
-			gap: 8px;
+			align-items: center;
+			gap: 10px;
+			padding: 14px 16px 12px;
+			border-bottom: 1px solid var(--border);
+			background: linear-gradient(135deg, #1a1d2e 0%, #111318 100%);
 		}
 
-		button {
-			flex: 1;
-			background: var(--button-bg);
+		.header-icon {
+			width: 32px;
+			height: 32px;
+			border-radius: 8px;
+			background: linear-gradient(135deg, #5c7cfa, #7950f2);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 16px;
+			flex-shrink: 0;
+			box-shadow: 0 0 12px rgba(92,124,250,0.35);
+		}
+
+		.header-text h1 {
+			font-size: 14px;
+			font-weight: 700;
 			color: var(--text-primary);
-			border: 1px solid var(--border-color);
-			padding: 8px 12px;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 13px;
-			transition: background-color 0.2s, transform 0.1s;
+			letter-spacing: -0.2px;
 		}
 
-		button:hover {
-			background: var(--button-hover);
+		.header-text p {
+			font-size: 10.5px;
+			color: var(--text-secondary);
+			margin: 0;
+			letter-spacing: 0.2px;
 		}
 
-		button:active {
-			background: var(--button-active);
-			transform: translateY(1px);
+		.header-badge {
+			margin-left: auto;
+			font-size: 9px;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+			color: var(--accent);
+			background: var(--accent-dim);
+			border: 1px solid rgba(92,124,250,0.2);
+			padding: 2px 7px;
+			border-radius: 20px;
+			text-transform: uppercase;
 		}
 
-		#donate {
-			background: #2c84db;
-			border-color: #2c84db;
-		}
-
-		#donate:hover {
-			background: #3a93e8;
-		}
-
-		#donate:active {
-			background: #2474c4;
-		}
-
+		/* ── Usage container ─────────────────────────────── */
 		#usage-container {
-			margin-bottom: 12px;
+			padding: 12px 16px 4px;
 		}
 
+		/* ── Limit row styling overrides ─────────────────── */
 		.popup-loading, .popup-error, .popup-empty {
 			font-size: 12px;
-			color: #888;
-			padding: 4px 0;
+			color: var(--text-secondary);
+			padding: 20px 0;
+			text-align: center;
 		}
 
 		.popup-org-header {
-			font-size: 11px;
-			color: #888;
-			margin-bottom: 4px;
-			padding-bottom: 2px;
-			border-bottom: 1px solid var(--border-color);
+			font-size: 10px;
+			font-weight: 600;
+			letter-spacing: 0.6px;
+			text-transform: uppercase;
+			color: var(--text-muted);
+			margin-bottom: 8px;
+			padding-bottom: 6px;
+			border-bottom: 1px solid var(--border-subtle);
 		}
 
 		.popup-org-section {
-			margin-bottom: 8px;
+			margin-bottom: 10px;
 		}
 
 		.popup-org-section:last-child {
@@ -97,20 +124,134 @@
 		}
 
 		.ut-progress-track {
-			background: #333;
+			background: rgba(255,255,255,0.07);
+			border-radius: 4px;
+		}
+
+		.ut-progress-bar {
+			border-radius: 4px;
+		}
+
+		/* ── Help text ───────────────────────────────────── */
+		.help-box {
+			margin: 10px 16px;
+			padding: 9px 11px;
+			background: var(--bg-secondary);
+			border: 1px solid var(--border);
+			border-radius: 8px;
+			font-size: 11px;
+			color: var(--text-secondary);
+			line-height: 1.6;
+		}
+
+		.help-box strong {
+			color: var(--text-primary);
+			font-weight: 500;
+		}
+
+		/* ── Action buttons ──────────────────────────────── */
+		.button-container {
+			display: flex;
+			gap: 8px;
+			padding: 10px 16px 14px;
+		}
+
+		button {
+			flex: 1;
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			font-family: inherit;
+			font-size: 12px;
+			font-weight: 500;
+			padding: 9px 12px;
+			transition: all 0.15s ease;
+		}
+
+		#debug {
+			background: var(--bg-card);
+			color: var(--text-secondary);
+			border: 1px solid var(--border);
+		}
+
+		#debug:hover {
+			background: var(--bg-hover);
+			color: var(--text-primary);
+		}
+
+		#donate {
+			background: linear-gradient(135deg, #0a66c2, #0e4f96);
+			color: white;
+			border: none;
+			box-shadow: 0 2px 8px rgba(10, 102, 194, 0.3);
+		}
+
+		#donate:hover {
+			background: linear-gradient(135deg, #1a76d2, #1a5fa6);
+			box-shadow: 0 4px 12px rgba(10, 102, 194, 0.4);
+			transform: translateY(-1px);
+		}
+
+		button:active {
+			transform: scale(0.97) !important;
+		}
+
+		/* ── Footer ──────────────────────────────────────── */
+		.footer {
+			border-top: 1px solid var(--border-subtle);
+			padding: 8px 16px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 4px;
+			font-size: 10px;
+			color: var(--text-muted);
+		}
+
+		.footer a {
+			color: var(--accent);
+			text-decoration: none;
+			font-weight: 500;
+		}
+
+		.footer a:hover {
+			text-decoration: underline;
 		}
 	</style>
 </head>
 
 <body>
+	<!-- Header -->
+	<div class="header">
+		<div class="header-icon">📊</div>
+		<div class="header-text">
+			<h1>ClaudeMonitor</h1>
+			<p>Real-time Claude.ai usage tracker</p>
+		</div>
+		<div class="header-badge">Live</div>
+	</div>
+
+	<!-- Usage bars -->
 	<div id="usage-container">
-		<div class="popup-loading">Loading usage data...</div>
+		<div class="popup-loading">Loading usage data…</div>
 	</div>
-	<p id="popup-help">If you clicked here because you can't find the usage stats, try reloading the page or authorizing the extension to run on claude.ai &mdash; the usage stats are injected directly into the page.</p>
+
+	<!-- Help note -->
+	<div class="help-box" id="popup-help">
+		<strong>Can't see usage stats?</strong> Open claude.ai and reload the page, or allow the extension to run on claude.ai.
+	</div>
+
+	<!-- Action buttons -->
 	<div class="button-container">
-		<button id="debug">Debug Logs</button>
-		<button id="donate">🔗 Made with love by Krunal Rana</button>
+		<button id="debug">🔍 Debug Logs</button>
+		<button id="donate">❤️ Krunal Rana</button>
 	</div>
+
+	<!-- Footer credit -->
+	<div class="footer">
+		Made with ❤️ by <a href="https://www.linkedin.com/in/krunal-rana/" target="_blank">Krunal Rana</a>
+	</div>
+
 	<script src="lib/browser-polyfill.min.js"></script>
 	<script src="content-components/localization.js"></script>
 	<script src="content-components/ui_dataclasses.js"></script>

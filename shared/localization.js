@@ -49,7 +49,7 @@ export const MESSAGES = {
 		"usage.marker_opus": "Opus (Weekly)",
 		"usage.marker_fallback": "Weekly",
 		"usage.footer_desktop": "Claude Desktop version available",
-		"usage.footer_qol": "Check out the Claude QoL extension",
+		// "usage.footer_qol": "Check out the Claude QoL extension",
 		"usage.footer_kofi": "Made with love by Krunal Rana",
 		"length.label": "Length",
 		"length.label_estimate": "Length*",

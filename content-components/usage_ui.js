@@ -268,18 +268,7 @@ class UsageUI {
 		sectionsContainer.appendChild(this.usageSection.elements.container);
 		content.appendChild(sectionsContainer);
 
-		// Add footers
-		const isElectron = await sendBackgroundMessage({ type: 'isElectron' });
-		if (!isElectron) {
-			const desktopFooter = this.createDesktopFooter();
-			content.appendChild(desktopFooter);
-
-			const qolFooter = this.createQoLFooter();
-			if (qolFooter) {
-				content.appendChild(qolFooter);
-			}
-		}
-
+		// Add credit footer
 		const donateFooter = this.createDonateFooter();
 		content.appendChild(donateFooter);
 
@@ -319,39 +308,6 @@ class UsageUI {
 		header.appendChild(title);
 		header.appendChild(settingsButton);
 		return header;
-	}
-
-	createDesktopFooter() {
-		const footer = document.createElement('div');
-		footer.className = 'ut-desktop-footer ut-sidebar-footer mt-1';
-
-		const link = document.createElement('a');
-		link.href = 'https://www.linkedin.com/in/krunal-rana/';
-		link.target = '_blank';
-		link.className = 'ut-link hover:text-text-200';
-		link.style.color = BLUE_HIGHLIGHT;
-		link.textContent = '💻 ClaudeMonitor';
-
-		footer.appendChild(link);
-		return footer;
-	}
-
-	createQoLFooter() {
-		const footer = document.createElement('div');
-		footer.className = 'ut-desktop-footer ut-sidebar-footer mt-1 ut-qol-footer';
-
-		const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-		const link = document.createElement('a');
-		link.href = isChrome
-			? 'https://chromewebstore.google.com/detail/claude-qol/dkdnancajokhfclpjpplkhlkbhaeejob'
-			: 'https://addons.mozilla.org/en-US/firefox/addon/claude-qol/';
-		link.target = '_blank';
-		link.className = 'ut-link hover:text-text-200';
-		link.style.color = BLUE_HIGHLIGHT;
-		link.textContent = '⚡ ' + localize('usage.footer_qol');
-
-		footer.appendChild(link);
-		return footer;
 	}
 
 	createDonateFooter() {

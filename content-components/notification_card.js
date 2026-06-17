@@ -409,97 +409,24 @@ class SettingsCard extends FloatingCard {
 	async build() {
 		const dragHandle = document.createElement('div');
 		dragHandle.className = 'border-b border-border-400 ut-header text-sm';
-		dragHandle.textContent = localize('card.settings_title');
+		dragHandle.style.fontWeight = '600';
+		dragHandle.textContent = '⚙️ ' + localize('card.settings_title');
 		this.element.appendChild(dragHandle);
 
-		const label = document.createElement('label');
-		label.className = 'ut-label text-sm';
-		label.textContent = localize('card.api_key_label');
-
-		const input = document.createElement('input');
-		input.type = 'password';
-		input.className = 'bg-bg-000 border border-border-400 text-text-000 ut-input ut-w-full text-sm';
-		let apiKey = await sendBackgroundMessage({ type: 'getAPIKey' })
-		if (apiKey) input.value = apiKey
-
-		const saveButton = document.createElement('button');
-		saveButton.textContent = localize('card.save');
-		saveButton.className = 'ut-button text-sm';
-		saveButton.style.background = BLUE_HIGHLIGHT;
-		saveButton.style.color = 'white';
-
-		// Button container
-		const buttonContainer = document.createElement('div');
-		buttonContainer.className = 'ut-row';
-
-		const debugButton = document.createElement('button');
-		debugButton.textContent = localize('common.debug_logs');
-		debugButton.className = 'bg-bg-300 border border-border-400 text-text-400 ut-button text-sm';
-
-		// Event listeners
-		debugButton.addEventListener('click', async () => {
-			const result = await sendBackgroundMessage({ type: 'openDebugPage' });
-			if (result === 'fallback') {
-				openDebugOverlay();
-			}
-			this.remove();
-		});
-
-		saveButton.addEventListener('click', async () => {
-			let result = await sendBackgroundMessage({ type: 'setAPIKey', newKey: input.value });
-
-			if (!result) {
-				const errorMsg = document.createElement('div');
-				errorMsg.className = 'text-sm';
-				errorMsg.style.color = RED_WARNING;
-				errorMsg.textContent = input.value.startsWith('sk-ant')
-					? localize('card.api_key_inactive')
-					: localize('card.api_key_invalid');
-				input.after(errorMsg);
-				setTimeout(() => errorMsg.remove(), 3000);
-				return;
-			}
-			location.reload();
-		});
-
-		// Reset notification toggle
-		const toggleContainer = document.createElement('div');
-		toggleContainer.className = 'ut-row';
-		toggleContainer.style.alignItems = 'start';
-		toggleContainer.style.gap = '6px';
-		toggleContainer.style.marginBottom = '8px';
-
-		const checkbox = document.createElement('input');
-		checkbox.type = 'checkbox';
-		checkbox.id = 'ut-reset-notif-toggle';
-		checkbox.checked = await sendBackgroundMessage({ type: 'getResetNotifEnabled' }) || false;
-		checkbox.addEventListener('change', () => {
-			sendBackgroundMessage({ type: 'setResetNotifEnabled', value: checkbox.checked });
-		});
-
-		const toggleLabel = document.createElement('label');
-		toggleLabel.htmlFor = 'ut-reset-notif-toggle';
-		toggleLabel.className = 'text-sm';
-		toggleLabel.textContent = localize('card.reset_notif_toggle');
-
-		toggleContainer.appendChild(checkbox);
-		toggleContainer.appendChild(toggleLabel);
-
-		// Language override dropdown
-		const langContainer = document.createElement('div');
-		langContainer.className = 'ut-row';
-		langContainer.style.alignItems = 'center';
-		langContainer.style.gap = '6px';
-		langContainer.style.marginBottom = '8px';
+		// ── Language ──────────────────────────────────────────────
+		const langSection = document.createElement('div');
+		langSection.style.cssText = 'margin-bottom: 10px;';
 
 		const langLabel = document.createElement('label');
 		langLabel.htmlFor = 'ut-language-override';
 		langLabel.className = 'text-sm';
+		langLabel.style.cssText = 'display: block; margin-bottom: 4px; font-weight: 500; opacity: 0.75;';
 		langLabel.textContent = localize('card.language_label');
 
 		const langSelect = document.createElement('select');
 		langSelect.id = 'ut-language-override';
 		langSelect.className = 'bg-bg-000 border border-border-400 text-text-000 ut-input text-sm';
+		langSelect.style.cssText = 'width: 100%; margin-bottom: 0; padding: 5px 8px; border-radius: 6px; cursor: pointer;';
 
 		const autoOpt = document.createElement('option');
 		autoOpt.value = '';
@@ -513,26 +440,53 @@ class SettingsCard extends FloatingCard {
 			langSelect.appendChild(opt);
 		}
 
-		// Preselect after options are appended ('' selects the Auto option).
 		const currentOverride = await sendBackgroundMessage({ type: 'getLanguageOverride' });
 		langSelect.value = currentOverride || '';
-
 		langSelect.addEventListener('change', async () => {
 			await sendBackgroundMessage({ type: 'setLanguageOverride', value: langSelect.value || null });
 			location.reload();
 		});
 
-		langContainer.appendChild(langLabel);
-		langContainer.appendChild(langSelect);
+		langSection.appendChild(langLabel);
+		langSection.appendChild(langSelect);
+		this.element.appendChild(langSection);
 
-		// Assemble
-		this.element.appendChild(label);
-		this.element.appendChild(input);
-		buttonContainer.appendChild(saveButton);
-		buttonContainer.appendChild(debugButton);
-		this.element.appendChild(toggleContainer);
-		this.element.appendChild(langContainer);
-		this.element.appendChild(buttonContainer);
+		// ── Reset notifications toggle ─────────────────────────────
+		const toggleSection = document.createElement('div');
+		toggleSection.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px; border-radius: 6px; background: rgba(128,128,128,0.08);';
+
+		const checkbox = document.createElement('input');
+		checkbox.type = 'checkbox';
+		checkbox.id = 'ut-reset-notif-toggle';
+		checkbox.style.cssText = 'width: 15px; height: 15px; cursor: pointer; accent-color: #2c84db;';
+		checkbox.checked = await sendBackgroundMessage({ type: 'getResetNotifEnabled' }) || false;
+		checkbox.addEventListener('change', () => {
+			sendBackgroundMessage({ type: 'setResetNotifEnabled', value: checkbox.checked });
+		});
+
+		const toggleLabel = document.createElement('label');
+		toggleLabel.htmlFor = 'ut-reset-notif-toggle';
+		toggleLabel.className = 'text-sm';
+		toggleLabel.style.cssText = 'cursor: pointer; user-select: none;';
+		toggleLabel.textContent = localize('card.reset_notif_toggle');
+
+		toggleSection.appendChild(checkbox);
+		toggleSection.appendChild(toggleLabel);
+		this.element.appendChild(toggleSection);
+
+		// ── Debug button ───────────────────────────────────────────
+		const debugButton = document.createElement('button');
+		debugButton.textContent = '🔍 ' + localize('common.debug_logs');
+		debugButton.className = 'bg-bg-300 border border-border-400 text-text-400 ut-button text-sm';
+		debugButton.style.cssText = 'width: 100%; padding: 7px; border-radius: 6px; font-size: 12px; opacity: 0.7;';
+		debugButton.addEventListener('click', async () => {
+			const result = await sendBackgroundMessage({ type: 'openDebugPage' });
+			if (result === 'fallback') {
+				openDebugOverlay();
+			}
+			this.remove();
+		});
+		this.element.appendChild(debugButton);
 
 		this.addCloseButton();
 		this.makeCardDraggable(dragHandle);
